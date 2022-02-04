@@ -378,7 +378,7 @@ class ExtraController extends Controller
         }
 
 
-        $endNews = Post::whereIn('id', $endNewss)->get();
+        $endNews = Post::where("status",1)->limit(6)->latest('created_at')->get();
 
 
 
