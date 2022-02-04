@@ -45,14 +45,6 @@ class IhaController extends Controller
 
     public function UserAdd(Request $request)
     {
-        $iha = array();
-
-        $iha['iha_usercode'] = $request->iha_usercode;
-        $iha['iha_username'] = $request->iha_username;
-        $iha['iha_password'] = $request->iha_password;
-        $iha['iha_rss'] = $request->iha_rss;
-
-        \DB::table('iha')->insert($iha);
 
         $notification = array(
             'message' => 'Kullanıcı Başarıyla Eklendi',
@@ -64,15 +56,6 @@ class IhaController extends Controller
 
     public function Userupdate(Request $request)
     {
-        $iha = array();
-        $iha['iha_usercode'] = $request->iha_usercode;
-        $iha['iha_username'] = $request->iha_username;
-        $iha['iha_password'] = $request->iha_password;
-        $iha['auto_Bot'] = $request->auto_Bot == "on" ? 1 : 0;
-        $iha['iha_rss'] = $request->iha_rss;
-        $iha['district'] = $request->district;
-
-        \DB::table('iha')->where('id', '=', $request->id)->update($iha);
 
         $notification = array(
             'message' => 'Kullanıcı Başarıyla Güncellendi',

@@ -25,7 +25,6 @@ class CornerPostsController extends Controller
     }
     public function CreateAuthorsPosts(Request $request) {
 
-        AuthorsPost::create($request->all());
 
         return redirect('/authors/posts');
 
@@ -33,18 +32,12 @@ class CornerPostsController extends Controller
 
     public function EditAuthorsPosts(AuthorsPost $cornerposts) {
         $authors=Authors::get();
-//        $cornerposts = AuthorsPost::leftjoin('authors', 'authors.id', '=', 'authors_posts.authors_id')
-//
-//            ->select(['authors_posts.*', 'authors.name'])
-//            ->where('authors_posts.id',$cornerposts)
-//            ->latest('created_at')
-//            ->first();
+
         return view('backend.authorsposts.edit',compact('cornerposts','authors'));
 
     }
     public function UpdateAuthorsPosts(Request $request,AuthorsPost $cornerposts) {
 
-        $cornerposts->Update($request->all());
             $notification = array(
                 'message' => 'Yazı Güncellendi',
                 'alert-type' => 'success'
@@ -54,12 +47,6 @@ class CornerPostsController extends Controller
     }
     public function ActiveAuthors(Request $request, $id)
     {
-        // $data = DB::table('subdistricts')->where('id', $id)->first();
-        // $update= Array();
-        $update['status'] = $request->aktif;
-
-//        DB::table('posts')->where('id', $id)->update($update);
-        AuthorsPost::find($id)->update($update);
 
         if ($request->aktif == 1) {
             $notification = array(
@@ -73,12 +60,9 @@ class CornerPostsController extends Controller
             );
         }
         return Redirect()->route('list.authorsposts')->with($notification);
-        // return view('backend.subdistrict.index', compact('subdistrict'));
 
-        // return view('backend.subdistrict.index');
     }
     public function DeleteAuthorsPosts(AuthorsPost $cornerposts) {
-        $cornerposts->delete();
 
         $notification = array(
             'message' => 'Köşe Yaızısı Başarıyla Silindi',

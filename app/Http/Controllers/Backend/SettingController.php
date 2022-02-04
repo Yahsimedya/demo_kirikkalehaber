@@ -19,17 +19,9 @@ class SettingController extends Controller
     }
     public function UpdateSocial(Request $request, $id)
     {
-        $data= array();
-        $data['facebook'] = $request->facebook;
-        $data['twitter'] = $request->twitter;
-        $data['youtube'] = $request->youtube;
-        $data['instagram'] = $request->instagram;
-        $data['linkedin'] = $request->linkedin;
 
-
-        DB::table('socials')->where('id',$id)->update($data);
         $notification = array(
-            'message' => 'Sosyal Medya Linkleri Başarıyla Eklendi',
+            'message' => 'Sosyal Medya Linkleri Başarıyla Güncellendi',
             'alert-type' => 'info'
         );
         return redirect()->route('social.setting')->with($notification);
@@ -44,20 +36,6 @@ class SettingController extends Controller
     }
     public function UpdateSeo(Request $request, Seos $seos)
     {
-//        $data= array();
-//        $data['meta_author'] = $request->meta_author;
-//        $data['meta_title'] = $request->meta_title;
-//        $data['meta_keyword'] = $request->meta_keyword;
-//        $data['meta_description'] = $request->meta_description;
-//        $data['google_analytics'] = $request->google_analytics;
-//        $data['google_verification'] = $request->google_verification;
-//        $data['alexa_analytics'] = $request->alexa_analytics;
-//
-//
-//        DB::table('seos')->where('id',$id)->update($data);
-//        dd($request->all());
-        $seos->fill($request->all()); // use fill function after validation!
-        $seos->save();
 
         $notification = array(
             'message' => 'SEO Ayarları Başarıyla Kaydedildi',

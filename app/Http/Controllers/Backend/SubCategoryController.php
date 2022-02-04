@@ -35,28 +35,8 @@ class SubCategoryController extends Controller
 
     public function CreateSubCategory(Request $request)
     {
-        $validatedData = $request->validate(
-            [
-                'subcategory_tr' => 'required|unique:subcategories|max:255',
-                'subcategory_en' => 'required|unique:subcategories|max:255',
-                'subcategory_keywords' => 'required|max:255',
-                'subcategory_description' => 'required|max:255',
-            ],
-            [
-                'subcategory_tr.required' => 'Türkçe kategori ismi boş olamaz lütfen doldurunuz',
-                'subcategory_tr.unique' => 'Bu isimle daha önce kayıt yapılmış',
-                'subcategory_tr.max' => 'İsim 255 karakterden büyük olamaz',
-                'subcategory_en.required' => 'İngilizce kategori ismi boş olamaz lütfen doldurunuz',
-                'subcategory_en.unique' => 'Bu isimle daha önce kayıt yapılmış',
-                'subcategory_en.max' => 'İsim 255 karakterden büyük olamaz',
-                'subcategory_keywords.required' => 'Alan boş olamaz lütfen doldurunuz',
-                'subcategory_keywords.max' => '255 karakterden büyük olamaz',
-                'subcategory_description.required' => 'Alan boş olamaz lütfen doldurunuz',
-                'subcategory_description' => '255 karakterden büyük olamaz',
-            ]
-        );
 
-        Subcategory::create($request->all());
+
 
 
         $notification = array(
@@ -78,19 +58,6 @@ class SubCategoryController extends Controller
 
     public function UpdateSubCategory(Request $request, $id)
     {
-        $validatedData = $request->validate(
-            [
-                'subcategory_tr' => 'required||max:255',
-                'subcategory_keywords' => 'required|max:255',
-                'subcategory_description' => 'required|max:255',
-            ],
-            [
-
-            ]
-        );
-
-        Subcategory::find($id)->update($request->all());
-
 
         $notification = array(
             'message' => 'Alt Kategori Başarıyla Eklendi',
@@ -101,12 +68,6 @@ class SubCategoryController extends Controller
 
     public function ActiveSubCategory(Request $request, $id)
     {
-        $data = DB::table('subcategories')->where('id', $id)->first();
-        // $update= Array();
-        $update['subcategory_status'] = $request->aktif;
-
-        DB::table('subcategories')->where('id', $id)->update($update);
-
 
         if ($request->aktif == 1) {
             $notification = array(
@@ -120,17 +81,12 @@ class SubCategoryController extends Controller
             );
         }
         return Redirect()->route('subcategories')->with($notification);
-        // return view('backend.subcategory.index', compact('subcategory'));
 
-        // return view('backend.subcategory.index');
     }
 
     public function DeleteSubCategory(Subcategory $subcategory)
     {
-//        $category = Subcategory::find($id)->delete();
-        $subcategory->delete();
 
-//        DB::table('subcategories')->where('id',$id)->delete();
         $notification = array(
             'message' => 'Alt Kategori Başarıyla Silindi',
             'alert-type' => 'error'
