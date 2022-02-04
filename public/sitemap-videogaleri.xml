@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/vendor/sitemap/styles/xml.xsl" type="text/xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+	<url>
+	<loc>https://localhost/dezavantajli-ogrencilere-sazli-sozlu-egitim/263/haberi</loc>
+		<priority>0.8</priority>
+		<lastmod>2020-10-22T12:44:09+03:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>https://localhost/karantina-evleri-dezenfekte-ediliyor/116/haberi</loc>
+		<priority>0.8</priority>
+		<lastmod>2020-08-22T17:10:50+03:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>https://localhost/kirikkalede-bir-mahalle-karantinaya-alindi/115/haberi</loc>
+		<priority>0.8</priority>
+		<lastmod>2020-08-22T17:10:20+03:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>https://localhost/kirikkaledeki-ilginc-olusum-gorenleri-sasirtiyor/114/haberi</loc>
+		<priority>0.8</priority>
+		<lastmod>2020-08-20T22:49:53+03:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>https://localhost/yuzlerce-yillik-bir-lezzet-efsanesi-keskin-tavasi/93/haberi</loc>
+		<priority>0.8</priority>
+		<lastmod>2020-08-14T17:36:02+03:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>https://localhost/kirikkalede-taziyeler-yasaklandi-dugunler-4-saate-indirildi/91/haberi</loc>
+		<priority>0.8</priority>
+		<lastmod>2020-08-14T17:35:15+03:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>https://localhost/mhpli-vekil-cocuklara-ozel-yaptirdigi-maskeleri-oyun-parklarinda-dagitti/90/haberi</loc>
+		<priority>0.8</priority>
+		<lastmod>2020-08-14T17:34:51+03:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>https://localhost/ayni-kavsakta-iki-benzer-kaza/86/haberi</loc>
+		<priority>0.8</priority>
+		<lastmod>2020-08-13T15:36:34+03:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+</urlset>
+
