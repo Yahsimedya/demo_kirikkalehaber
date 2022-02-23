@@ -66,7 +66,7 @@ class AdminController extends Controller
             ]
         ); // günlük toplam oturum ve sayfa görüntüleme oranı
         $analyticsDataMonth = Analytics::performQuery(
-            Period::days(1),
+            Period::days(30),
             'ga:sessions',
             [
                 'metrics' => 'ga:users, ga:pageviews',

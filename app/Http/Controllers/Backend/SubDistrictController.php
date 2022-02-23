@@ -16,12 +16,16 @@ class SubDistrictController extends Controller
     {
         $subdistrict = Subdistrict::leftjoin('districts', 'subdistricts.district_id', '=', 'districts.id')
             ->select(['subdistricts.*', 'districts.district_tr'])->latest('district_tr')->paginate(20);
-
+//        $subdistrict = DB::table('subdistricts')
+//        ->join('districts','subdistricts.district_id','districts.id')
+//        ->select('subdistricts.*','districts.district_tr')
+//        ->orderBy('created_at', 'desc')->paginate(2);
 
         return view('backend.subdistrict.index', compact('subdistrict'));
     }
     public function AddSubDistrict()
     {
+//        $districts = DB::table('districts')->orderBy('district_tr', 'asc')->get();
         $districts =District::latest('')->get();
         return view('backend.subdistrict.create',compact('districts'));
     }
@@ -57,12 +61,25 @@ class SubDistrictController extends Controller
     }
     public function EditSubDistrict(Subdistrict $subdistrict)
     {
+        // $data =DB::table('categories')->find($id);
+//        $data = DB::table('subdistricts')->where('id', $id)->first();
         $districts= DB::table('districts')->get();
 
         return view('backend.subdistrict.edit', compact('subdistrict','districts'));
     }
     public function UpdateSubDistrict(Request $request,Subdistrict $subdistrict)
     {
+        $validatedData = $request->validate(
+            [
+                'subdistrict_tr' => 'required||max:255',
+                'subdistrict_keywords' => 'required|max:255',
+                'subdistrict_description' => 'required|max:255',
+            ],
+            [
+
+            ]
+        );
+$subdistrict->update($request->all());
 
         $notification = array(
             'message' => 'Alt Kategori Başarıyla Eklendi',
@@ -72,7 +89,8 @@ class SubDistrictController extends Controller
     }
     public function ActiveSubDistrict(Request $request,$id)
     {
-
+        // $data = DB::table('subdistricts')->where('id', $id)->first();
+        // $update= Array();
         $update['subdistrict_status'] = $request->aktif;
 
          DB::table('subdistricts')->where('id',$id)->update($update);
@@ -90,10 +108,13 @@ class SubDistrictController extends Controller
         );
     }
         return Redirect()->route('subdistrict')->with($notification);
+        // return view('backend.subdistrict.index', compact('subdistrict'));
 
+        // return view('backend.subdistrict.index');
     }
     public function DeleteSubDistrict(Subdistrict $subdistrict)
     {
+//        DB::table('subdistricts')->where('id',$id)->delete();
         $subdistrict->delete();
         $notification = array(
             'message' => 'Alt Bölge Başarıyla Silindi',

@@ -6,6 +6,7 @@
 @section('google_verification',$seoset->google_verification)
 @section('adsense_code',$seoset->adsense_code)
 
+
 @section('content')
     <?php
     $socials = DB::table('socials')->get();
@@ -225,8 +226,8 @@
                         </div>
                         <div class="swiper-pagination anamanset-pagination">
                         </div>
-                        <div class="swiper-button-next manset-next pt-5 mt-5"></div>
-                        <div class="swiper-button-prev manset-prev pt-5 mt-5"></div>
+                        <div class="swiper-button-next manset-next"></div>
+                        <div class="swiper-button-prev manset-prev"></div>
                     </div>
                     <div class="row mt-0">
                         @if($themeSetting[0]->fotogaleri!=0)
@@ -465,6 +466,43 @@
 
             @endif
 
+           @if($themeSetting[0]->gazetesayisi!=0)
+            <div class="position-relative mt-3 ">
+                <b>YENİ SAYILARIMIZ</b>
+                <p class="detay__sidebar-baslik "></p>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-12 pr-2">
+                    <div class="swiper-containe r mySwiper">
+                        <div class="swiper-wrapper">
+                            @foreach($egazete as $row)
+                                <div class="swiper-slide border egazete_size">
+                                    <a class="example-image-link" target="_blank" href="{{$row->image}}"
+                                       data-lightbox="example-set" data-title="{{$row->title_tr}}">
+                                        <img data-src="{{asset($row->image)}}"
+                                             class="img-fluid lazyload" alt="">
+                                        <div style="color:{{$themeSetting[0]->siteColorTheme}}!important;"
+                                             class="text-center text-orange-400">{{Str::limit($row->title_tr)}}</div>
+                                        <div
+                                            class="text-center text-orange-400 font-weight-thin card-kisalt">{{ \Carbon\Carbon::parse($row->date)->isoFormat('DD MMMM YYYY') }}</div>
+                                    </a>
+                                </div>
+                                <script>
+                                    lightbox.option({
+                                        'albumLabel': "",
+                                        //   'disableScrolling':true,
+                                    })
+                                </script>
+                            @endforeach
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+
+            </div>
+            @endif
+
+
             <div class="position-relative mt-3 ">
                 <b>EN ÇOK OKUNANLAR</b>
                 <p class="detay__sidebar-baslik "></p>
@@ -474,53 +512,53 @@
                     <div class="row ml-0">
                         <div class="col-md-6">
                             @if(isset($endNews[0]))
-                                <div class="card kart kart-width kart-margin shadow">
-                                    <a href="{{URL::to('/'.str_slug($endNews[0]->title_tr).'/'.$endNews[0]->id.'/'.'haberi')}}">
-                                        <img
-                                            onerror="this.onerror=null;this.src='{{$webSiteSetting->defaultImage}}';"
-                                            class="img_fluid kart_img lazyload" src="{{asset($endNews[0]->image)}}"
-                                            alt="Card image cap"></a>
+                            <div class="card kart kart-width kart-margin shadow">
+                                <a href="{{URL::to('/'.str_slug($endNews[0]->title_tr).'/'.$endNews[0]->id.'/'.'haberi')}}">
+                                    <img
+                                        onerror="this.onerror=null;this.src='{{$webSiteSetting->defaultImage}}';"
+                                        class="img_fluid kart_img lazyload" src="{{asset($endNews[0]->image)}}"
+                                        alt="Card image cap"></a>
 
-                                    <div class="card-body kart-body   border-3 text-dark">
-                                        {{--                                    @if($row->headlinetag==1)--}}
-                                        {{--                                        <div class="short-tag"--}}
-                                        {{--                                             style="background-color:{{$themeSetting[0]->economy}}">--}}
-                                        {{--                                            <span>Son Dakika</span>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                    @else--}}
-                                        {{--                                        <div class="short-tag category"--}}
-                                        {{--                                             style="background-color:{{$themeSetting[0]->economy}}">--}}
-                                        {{--                                            <span>{{$row->category->category_tr}}</span>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                    @endif--}}
-                                        <p class="card-text card-kisalt">{{$endNews[0]->title_tr}}</p>
-                                    </div>
-
+                                <div class="card-body kart-body   border-3 text-dark">
+{{--                                    @if($row->headlinetag==1)--}}
+{{--                                        <div class="short-tag"--}}
+{{--                                             style="background-color:{{$themeSetting[0]->economy}}">--}}
+{{--                                            <span>Son Dakika</span>--}}
+{{--                                        </div>--}}
+{{--                                    @else--}}
+{{--                                        <div class="short-tag category"--}}
+{{--                                             style="background-color:{{$themeSetting[0]->economy}}">--}}
+{{--                                            <span>{{$row->category->category_tr}}</span>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
+                                    <p class="card-text card-kisalt pt-3">{{$endNews[0]->title_tr}}</p>
                                 </div>
+
+                            </div>
                             @endif
-                            {{--                            @if(isset($endNews[0]))--}}
-                            {{--                            <a href="{{URL::to('/'.str_slug($endNews[0]->title_tr).'/'.$endNews[0]->id.'/'.'haberi')}}">--}}
-                            {{--                                <img onerror="this.onerror=null;this.src='{{$webSiteSetting->defaultImage}}';"--}}
-                            {{--                                     class="img_fluid kart_img lazyload" data-src=" {{asset($endNews[0]->image)}}"--}}
-                            {{--                                     alt="Card image cap">--}}
-                            {{--                            <span class="w-100 text-center card-kisalttek">{{$endNews[0]->title_tr}}</span>--}}
-                            {{--                            </a>--}}
-                            {{--                                @endif--}}
+{{--                            @if(isset($endNews[0]))--}}
+{{--                            <a href="{{URL::to('/'.str_slug($endNews[0]->title_tr).'/'.$endNews[0]->id.'/'.'haberi')}}">--}}
+{{--                                <img onerror="this.onerror=null;this.src='{{$webSiteSetting->defaultImage}}';"--}}
+{{--                                     class="img_fluid kart_img lazyload" data-src=" {{asset($endNews[0]->image)}}"--}}
+{{--                                     alt="Card image cap">--}}
+{{--                            <span class="w-100 text-center card-kisalttek">{{$endNews[0]->title_tr}}</span>--}}
+{{--                            </a>--}}
+{{--                                @endif--}}
                         </div>
                         <div class="col-md-6">
-                            <ul class="list-group p-2">
-                                @if(count($endNews)>0)
-                                    @for($i=1;$i<count($endNews);$i++)
+                            <ul class="list-group ">
+@if(count($endNews)>0)
+                                @for($i=1;$i<count($endNews);$i++)
 
-                                        <a href="{{URL::to('/'.str_slug($endNews[$i]->title_tr).'/'.$endNews[$i]->id.'/'.'haberi')}}">
-                                            <li class="list-group-item card-kisalttek"><img
-                                                    data-src="{{asset($endNews[$i]->image)}}"
-                                                    onerror="this.onerror=null;this.src='{{$webSiteSetting->defaultImage}}';"
-                                                    class="img-fluid lazyload"
-                                                    width="100px"> {{$endNews[$i]->title_tr}}</li>
-                                        </a>
-                                    @endfor
-                                @endif
+                                    <a href="{{URL::to('/'.str_slug($endNews[$i]->title_tr).'/'.$endNews[$i]->id.'/'.'haberi')}}">
+                                        <li class="border-bottom card-kisalttek mb-1"><img
+                                                data-src="{{asset($endNews[$i]->image)}}"
+                                                onerror="this.onerror=null;this.src='{{$webSiteSetting->defaultImage}}';"
+                                                class="img-fluid lazyload mr-2""
+                                                width="100px">{{$endNews[$i]->title_tr}}</li>
+                                    </a>
+                                @endfor
+    @endif
                             </ul>
                         </div>
                     </div>
@@ -1225,7 +1263,7 @@
                                         Lig</b> Puan Durumu
                                 </div>
                             </div>
-                            @include('main.body.puan-durumu')
+                              @include('main.body.puan-durumu')
                         </div>
                     </div>
                 </div>

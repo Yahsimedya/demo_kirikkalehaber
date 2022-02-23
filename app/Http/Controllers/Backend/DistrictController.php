@@ -22,6 +22,28 @@ $district = DB::table('districts')->latest('id')->get();
     }
     public function CreateDistrict(Request $request)
     {
+        $validatedData = $request->validate(
+            [
+                'district_tr' => 'required|unique:districts|max:255',
+                'district_en' => 'required|unique:districts|max:255',
+                'district_keywords' => 'required|max:255',
+                'district_description' => 'required|max:255',
+            ],
+            [
+                'district_tr.required' => 'Türkçe Bölge ismi boş olamaz lütfen doldurunuz',
+                'district_tr.unique' => 'Bu isimle daha önce kayıt yapılmış',
+                'district_tr.max' => 'İsim 255 karakterden büyük olamaz',
+                'district_en.required' => 'İngilizce Bölge ismi boş olamaz lütfen doldurunuz',
+                'district_en.unique' => 'Bu isimle daha önce kayıt yapılmış',
+                'district_en.max' => 'İsim 255 karakterden büyük olamaz',
+                'district_keywords.required' => 'Alan boş olamaz lütfen doldurunuz',
+                'district_keywords.max' => '255 karakterden büyük olamaz',
+                'district_description.required' => 'Alan boş olamaz lütfen doldurunuz',
+                'district_description' => '255 karakterden büyük olamaz',
+            ]
+        );
+
+District::create($request->all());
 
         $notification = array(
             'message' => 'Bölge Başarıyla Eklendi',
@@ -31,6 +53,11 @@ $district = DB::table('districts')->latest('id')->get();
     }
     public function ActiveDistrict(Request $request, $id)
     {
+        $data = DB::table('districts')->where('id', $id)->first();
+        $update['district_status'] = $request->aktif;
+
+        DB::table('districts')->where('id', $id)->update($update);
+
 
         if ($request->aktif == 1) {
             $notification = array(
@@ -54,8 +81,28 @@ $district = DB::table('districts')->latest('id')->get();
     }
     public function UpdateDistrict(Request $request,District $district)
     {
+        $validatedData = $request->validate(
+            [
+                'district_tr' => 'required|max:255',
+                'district_en' => 'required|max:255',
+                'district_keywords' => 'required|max:255',
+                'district_description' => 'required|max:255',
+            ],
+            [
+                'district_tr.required' => 'Türkçe Bölge ismi boş olamaz lütfen doldurunuz',
+                'district_tr.unique' => 'Bu isimle daha önce kayıt yapılmış',
+                'district_tr.max' => 'İsim 255 karakterden büyük olamaz',
+                'district_en.required' => 'İngilizce Bölge ismi boş olamaz lütfen doldurunuz',
+                'district_en.unique' => 'Bu isimle daha önce kayıt yapılmış',
+                'district_en.max' => 'İsim 255 karakterden büyük olamaz',
+                'district_keywords.required' => 'Alan boş olamaz lütfen doldurunuz',
+                'district_keywords.max' => '255 karakterden büyük olamaz',
+                'district_description.required' => 'Alan boş olamaz lütfen doldurunuz',
+                'district_description' => '255 karakterden büyük olamaz',
+            ]
+        );
 
-
+$district->update($request->all());
 
         $notification = array(
             'message' => 'Bölge Başarıyla Güncellendi',
@@ -65,6 +112,7 @@ $district = DB::table('districts')->latest('id')->get();
     }
     public function DeleteDistrict(District $district)
     {
+        $district->delete();
         $notification = array(
             'message' => 'Bölge Başarıyla Silindi',
             'alert-type' => 'success'

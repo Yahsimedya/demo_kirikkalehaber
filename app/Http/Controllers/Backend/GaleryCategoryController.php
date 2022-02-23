@@ -27,7 +27,28 @@ class GaleryCategoryController extends Controller
     }
     public function CreateCategory(Request $request)
     {
+        $validatedData = $request->validate(
+            [
+                'category_title' => 'required|unique:photocategories|max:255',
 
+            ],
+            [
+                'category_title.required' => 'Türkçe kategori ismi boş olamaz lütfen doldurunuz',
+
+            ]
+        );
+
+        Photocategory::create($request->all());
+
+//        $data = array();
+//        $data['category_title'] = $request->category_title;
+//        $data['keywords_tr'] = $request->keywords_tr;
+//        $data['description_tr'] = $request->description_tr;
+//        $data['keywords_en'] = $request->keywords_en;
+//        $data['description_en'] = $request->description_en;
+//        $data['created_at'] = Carbon::now();
+//
+//        DB::table('photocategories')->insert($data);
         $notification = array(
             'message' => 'Galeri Kategori Başarıyla Eklendi',
             'alert-type' => 'success'
@@ -36,13 +57,25 @@ class GaleryCategoryController extends Controller
     }
     public function EditCategory(Photocategory $photocategory)
     {
+        // $data =DB::table('categories')->find($id);
+//        $kategori = DB::table('photocategories')->where('id', $id)->first();
 
         return view('backend.galerycategory.edit', compact('photocategory'));
     }
     public function UpdateCategory(Request $request, Photocategory $photocategory)
     {
+        $validatedData = $request->validate(
+            [
+                'category_title' => 'required|unique:photocategories|max:255',
 
+            ],
+            [
+                'category_title.required' => 'Türkçe kategori ismi boş olamaz lütfen doldurunuz',
 
+            ]
+        );
+
+$photocategory->update($request->all());
 
         $notification = array(
             'message' => 'Galeri Kategori Başarıyla Eklendi',
@@ -52,6 +85,7 @@ class GaleryCategoryController extends Controller
     }
     public function DeleteCategory(Photocategory $photocategory)
     {
+$photocategory->delete();
         $notification = array(
             'message' => 'Galeri Kategori Başarıyla Silindi',
             'alert-type' => 'success'
@@ -81,6 +115,8 @@ class GaleryCategoryController extends Controller
         );
     }
         return Redirect()->route('galeri.categories')->with($notification);
+        // return view('backend.subcategory.index', compact('subcategory'));
 
+        // return view('backend.subcategory.index');
     }
 }

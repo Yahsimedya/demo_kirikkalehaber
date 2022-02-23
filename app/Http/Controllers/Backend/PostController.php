@@ -26,9 +26,11 @@ class PostController extends Controller
 
         $text = $request->get('haber');
 
-
+        // $foto=$dbPDO->prepare("SELECT haberfoto_isim from haber_foto where haberfoto_isim  LIKE concat( '%', :haberfoto_isim, '%')");
+//        $stmt=$db->genelsorgu("SELECT * from haber where haber_ad  LIKE '%$text%' order by haber_Zaman DESC   limit 50");
         $search = Post::where('title_tr', 'LIKE', '%' . $text . '%')->limit(30)->latest()->get();
-
+//        $searchPost = DB::posts()->where('title_tr','LIKE','%'.$text.'%')->get();
+//        $searchPost = User::where('name','LIKE',"%".$text."%")->get();
         $output = '<table id="example1" class="table datatable-responsive">
             <thead>
               <tr>
@@ -79,8 +81,48 @@ class PostController extends Controller
 
         return $output;
 
+
+//        return view('backend.post.index', compact('search'));
+
+//        return response()->json($baslik);
+//        return response($baslik);
+
+//        return  $baslik;
+
+
+//        $output .= '</ul>';
+
+//        return $searchPost->title_tr;
+//        return $data = '<div class="col-md-12">'.$searchPost->title_tr.'</div>';
+//        return \Response::json($searchPost);
+
+//        return view('backend.post.index')->with('data', $searchPost);
+//        return $searchPost= '  <table id="example1" class="table table-bordered table-striped">
+//            <thead>
+//              <tr>
+//                <th align="center" width="5">#</th>
+//                <th>Haber Görseli</th>
+//                <th>Haber Başlığı</th>
+//                <th width="150">Tarih</th>
+//                <th width="150">Kategori</th>
+//
+//                <th></th>
+//                <th></th>
+//                <th></th>
+//                <th></th>
+//                <th>Durum</th>
+//                <th>Resim İşlemleri</th>
+//                <th></th>
+//                <th></th>
+//
+//              </tr>
+//            </thead>
+//            <tbody id="sortable">
+//            ';
+
     }
 
+    //
     public function index()
     {
         $post = Post::leftjoin('categories', 'posts.category_id', '=', 'categories.id')
@@ -120,11 +162,66 @@ class PostController extends Controller
     public function CreatePosts(Request $request)
     {
 
+        $validatedData = $request->validate(
+            [
+
+                'category_id' => 'required',
+                'district_id' => 'required',
+                'image' => 'required',
+
+            ],
+            [
+                'category_id.required' => 'Kategori Seçimeniz Gerekmektedir.',
+                'district_id.required' => 'Bölge Seçimi Yapmanız Gerekmektedir.',
+                'image.required' => 'Fotoğraf Alanı Zorunludur',
+
+            ]
+        );
+
+
+        $post = Post::create($request->all());
+        if ($request->publish_date = Carbon::now()->format('Y-m-d')) {
+            $yil = Carbon::now()->year;
+            $ay = Carbon::now()->month;
+            if (file_exists('storage/postimg/' . $yil) == false) {
+                mkdir('storage/postimg/' . $yil, 0777, true);
+            }
+            if (file_exists('storage/postimg/' . $yil . '/' . $ay) == false) {
+                mkdir('storage/postimg/' . $yil . '/' . $ay, 0777, true);
+            }
+
+            $image = $request->image;
+            if ($image) {
+                $image_one = uniqid() . '.' . Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $image->getClientOriginalExtension();
+
+                $new_image_name = 'storage/postimg/' . $yil . '/' . $ay . '/' . $image_one;
+
+                Image::make($image)->resize(800, 450)->fit(800, 450)->save($new_image_name, 68, 'jpeg');
+
+                $post->image = $new_image_name;
+            }
+
+            $tagNames = explode(',', $request->get('tag')[0]);
+            $tagIds = [];
+            foreach ($tagNames as $tagName) {
+//                    $post->tag()->create(['name'=>$tagName]);
+                //Or to take care of avoiding duplication of Tag
+                //you could substitute the above line as
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                if ($tag) {
+                    $tagIds[] = $tag->id;
+                }
+
+            }
+            $post->tag()->sync($tagIds);
+
+            $post->save();
 
             return Redirect()->route('all.post')->with([
                 'message' => 'Haber Başarıyla Eklendi',
                 'alert-type' => 'success'
             ]);
+        }
     }
 
     public function EditPosts(Post $post)
@@ -151,17 +248,82 @@ class PostController extends Controller
     public function UpdatePost(Request $request, Post $post)
     {
 
+        $validatedData = $request->validate(
+            [
+
+                'category_id' => 'required',
+                'district_id' => 'required',
+                // 'image' => 'required',
+            ],
+            [
+                'category_id.required' => 'Kategori Seçimeniz Gerekmektedir.',
+                'district_id.required' => 'Bölge Seçimi Yapmanız Gerekmektedir.',
+                // 'image.required' => 'Fotoğraf Alanı Zorunludur',
+            ]
+        );
+
+        if ($request->publish_date = Carbon::now()->format('Y-m-d')) {
+            $post->fill($request->all()); // use fill function after validation!
+
+            $yil = Carbon::now()->year;
+            $ay = Carbon::now()->month;
+            if (file_exists('storage/postimg/' . $yil) === false) {
+                mkdir('storage/postimg/' . $yil, 0777, true);
+            }
+            if (file_exists('storage/postimg/' . $yil . '/' . $ay) === false) {
+                mkdir('storage/postimg/' . $yil . '/' . $ay, 0777, true);
+            }
+
+            $image = $request->image;
+            if ($image) { // if image is updating
+                $image_one = uniqid() . '.' . $image->getClientOriginalName();
+
+                $new_image_name = 'storage/postimg/' . $yil . '/' . $ay . '/' . $image_one;
+                Image::make($image)->resize(800, 450)->fit(800, 450)->save($new_image_name, 68, 'jpeg');
+                $post->image = $new_image_name; // set new image to the object, replace tmp image with new right path
+
+                if (file_exists($request->old_image)) {
+                    unlink($request->old_image);
+                }
+            }
+
+            $tagNames = explode(',', $request->get('tag')[0]); //
+            $tagIds = [];
+            foreach ($tagNames as $tagName) {
+//                    $post->tag()->create(['name'=>$tagName]);
+                //Or to take care of avoiding duplication of Tag
+                //you could substitute the above line as
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                if ($tag) {
+                    $tagIds[] = $tag->id;
+                }
+            }
+            $post['manset'] = $request->manset == null ? 0 : 1;
+            $post['story'] = $request->story == null ? 0 : 1;
+            $post['headline'] = $request->headline == null ? 0 : 1;
+            $post['featured'] = $request->featured == null ? 0 : 1;
+            $post['surmanset'] = $request->surmanset == null ? 0 : 1;
+            $post['attentiontag'] = $request->attentiontag == null ? 0 : 1;
+            $post['flahtag'] = $request->flahtag == null ? 0 : 1;
+            $post['headlinetag'] = $request->headlinetag == null ? 0 : 1;
+
+            $post->tag()->sync($tagIds);
+
+            $post->save(); // then save the new data to db, save data and new image as well
 
             return Redirect()->route('all.post')->with([
                 'message' => 'Haber Başarıyla Güncellendi',
                 'alert-type' => 'success'
             ]);
+        }
     }
 
     public function ActivePost(Request $request, $id)
     {
 
+        $update['status'] = $request->aktif;
 
+        DB::table('posts')->where('id', $id)->update($update);
 
 
         if ($request->aktif == 1) {
@@ -182,7 +344,11 @@ class PostController extends Controller
     public function DeletePost(Post $post)
     {
 
-
+        if (file_exists($post->image)) {
+            unlink($post->image);
+        }
+//DB::table('posts')->where('id',$id)->delete();
+        $post->delete();
         $notification = array(
             'message' => 'Haber Başarıyla Silindi',
             'alert-type' => 'error'

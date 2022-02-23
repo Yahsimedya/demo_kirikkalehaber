@@ -40,6 +40,12 @@ class FixedPageController extends Controller
      */
     public function store(Request $request)
     {
+        $data = array();
+        $data['title'] = $request->title;
+        $data['content'] = $request->content;
+        $data['keyword'] = $request->keyword;
+        $data['description'] = $request->description;
+        DB::table('fixedpage')->insert($data);
         $notification = array(
             'message' => 'Sayfa Başarıyla Eklendi',
             'alert-type' => 'success'
@@ -65,6 +71,13 @@ class FixedPageController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        $data= array();
+        $data['title'] =$request->title;
+        $data['content'] =$request->content;
+        $data['keyword'] =$request->keyword;
+        $data['description'] =$request->description;
+        DB::table('fixedpage')->where('id',$id)->update($data);
+
 
         $notification = array(
             'message' => 'Kategori Başarıyla Güncellendi',
@@ -76,7 +89,10 @@ class FixedPageController extends Controller
 
     public function status(Request $request, $id)
     {
+        $data = DB::table('fixedpage')->where('id', $id)->first();
+        $update['status'] = $request->aktif;
 
+        DB::table('fixedpage')->where('id', $id)->update($update);
         if ($request->aktif == 1) {
             $notification = array(
                 'message' => 'Sayfa Aktif Yapıldı',

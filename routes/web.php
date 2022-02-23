@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\GaleryCategoryController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\EgazeteController;
 use App\Http\Controllers\Backend\WebsiteSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubDistrictController;
@@ -232,12 +233,14 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
 
 // PHOTO GALERY ROUTES
-    Route::get('/photo/galery', [GalleryController::class, 'PhotoGalery'])->name('photo.galery');
-    Route::get('/add/photogalery', [GalleryController::class, 'AddPhotoGalery'])->name('add.photogalery');
-    Route::post('/create/photo', [GalleryController::class, 'CreatePhoto'])->name('create.photo');
-    Route::get('/galery/detail/{id}', [GalleryController::class, 'GaleryDetail'])->name('galery.detail');
+    Route::get('/photo/galery', [GalleryController::class, 'PhotoGalery'])->name('photo.galery'); //Galerilerin listelendiği sayfa
+    Route::get('/add/photogalery', [GalleryController::class, 'AddPhotoGalery'])->name('add.photogalery'); // Fotogaleri ekleme sayfası
+    Route::post('/create/photo', [GalleryController::class, 'CreatePhoto'])->name('create.photo');// Fotogaleri ekleme sayfasında create ederek galeriyi oluşturur
+    Route::get('/galery/detail/{id}', [GalleryController::class, 'GaleryDetail'])->name('galery.detail'); //fotogaleriye eklenen tüm fotğrafları gösterir
+
     Route::get('/galery/Add/{id}', [GalleryController::class, 'GaleryDetailAdd'])->name('galery.detailAdd');
-//    Route::get('/galery/update/', [GalleryController::class, 'UpdatePhoto'])->name('update.photo');
+
+    Route::post('/galery/update/', [GalleryController::class, 'UpdatePhoto'])->name('update.photo');
     Route::post('/add/photo/text/{photocategory_id}', [GalleryController::class, 'AddText'])->name('add.text');
     Route::post('/galery/photo/active/{id}', [GalleryController::class, 'ActivePhotoGalery'])->name('active.photogalery');
     Route::get('/galery/delete/{id}', [GalleryController::class, 'DeleteGalery'])->name('delete.galery');
@@ -312,6 +315,15 @@ Route::get('/fixedpage/delete/{id}', [FixedPageController::class, 'delete'])->na
 Route::post('/fixedpage/edit/{id}', [FixedPageController::class, 'edit'])->name('fixedpage.edit');
 Route::get('/fixedpage/editPage/{id}', [FixedPageController::class, 'editPage'])->name('fixedpage.editPage');
 
+//E Gazete Page
+
+Route::get('/egazete', [EgazeteController::class, 'index'])->name('egazete.index');
+Route::get('/egazete/add', [EgazeteController::class, 'add'])->name('egazete.add');
+Route::post('/egazete/post', [EgazeteController::class, 'store'])->name('egazete.postStore');
+Route::post('/egazete/status/{id}', [EgazeteController::class, 'status'])->name('egazete.status');
+Route::get('/egazete/delete/{id}', [EgazeteController::class, 'delete'])->name('egazete.delete');
+Route::post('/egazete/edit/{post}', [EgazeteController::class, 'edit'])->name('egazete.edit');
+Route::get('/egazete/editPage/{id}', [EgazeteController::class, 'editPage'])->name('egazete.editPage');
 
 // User Operations
 

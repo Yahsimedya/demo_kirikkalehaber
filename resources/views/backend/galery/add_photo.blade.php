@@ -17,22 +17,37 @@
                 </div>
             </div>
 
-            <div class="card-body">
-                <p class="mb-3">Sürükle bırak metoduyla  oluşturmuş olduğunuz foto galeriye fotoğraf <code>yükleyebilirsiniz</code> Yüklediğiniz fotoğrafları <code>Fotoları Gör</code> butonu yardımıyla görebilir, sıralayabilir yada içerik ekleyebilirsiniz</p>
 
-                <!-- <form action="#" class="dropzone" id="dropzone_remove"></form> -->
+            <div class="card-body">
+
                 <div class="form-group pt-4 pb-4">
-                    <a class="btn btn-success float-right" href=""><i class="icon-stack-plus" aria-hidden="true"></i>
+                    <a class="btn btn-success float-right" href="{{route('galery.detail',$photocategory->photocategory_id)}}"><i class="icon-stack-plus" aria-hidden="true"></i>
                         Fotoları Gör
                     </a></div>
-                <form action="{{route('update.photo', $photocategory)}}" class="dropzone" >
+                <form action="{{route('update.photo')}}" class="dropzone dz-clickable" id="dropzone_multiple" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="image" id="dropzone_remove" value="">
+                    <input type="hidden" name="photocategory_id" id="dropzone_remove" value="{{$photocategory->photocategory_id}}">
 
+                    <div class="dz-default dz-message">
+                        <button class="dz-button" type="button">
+                            Fotoğrafları sürükle yada tıkla
+                        </button></div>
                 </form>
-
             </div>
         </div>
         <!-- /removable thumbnails -->
     </div>
+    <script>
+        Dropzone.autoDiscover = false;
+
+        $("#dropzone_multiple").dropzone({
+            paramName: "file", // The name that will be used to transfer the file
+            dictDefaultMessage: 'Fotoğrafları sürükle yada tıkla',
+            maxFilesize: 1, // MB
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+
+            acceptedFiles: 'image/*'
+
+        });
+    </script>
 @endsection

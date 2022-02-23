@@ -45,6 +45,14 @@ class IhaController extends Controller
 
     public function UserAdd(Request $request)
     {
+        $iha = array();
+
+        $iha['iha_usercode'] = $request->iha_usercode;
+        $iha['iha_username'] = $request->iha_username;
+        $iha['iha_password'] = $request->iha_password;
+        $iha['iha_rss'] = $request->iha_rss;
+
+        \DB::table('iha')->insert($iha);
 
         $notification = array(
             'message' => 'Kullanıcı Başarıyla Eklendi',
@@ -56,6 +64,15 @@ class IhaController extends Controller
 
     public function Userupdate(Request $request)
     {
+        $iha = array();
+        $iha['iha_usercode'] = $request->iha_usercode;
+        $iha['iha_username'] = $request->iha_username;
+        $iha['iha_password'] = $request->iha_password;
+        $iha['auto_Bot'] = $request->auto_Bot == "on" ? 1 : 0;
+        $iha['iha_rss'] = $request->iha_rss;
+        $iha['district'] = $request->district;
+
+        \DB::table('iha')->where('id', '=', $request->id)->update($iha);
 
         $notification = array(
             'message' => 'Kullanıcı Başarıyla Güncellendi',
@@ -134,9 +151,38 @@ class IhaController extends Controller
 
             $olustur = file_put_contents('dene.xml', $exec);
         }
+        $xmlDataString = file_get_contents(public_path('dene.xml'));
+
+        $converted = Str::substr($xmlDataString, 0, 40);
+        $convertedistek = Str::substr($xmlDataString, 0, 39);
+
+        if ($converted == "Bu şehire ait haberler içi yetkiniz yok.") {
+            $notification = array(
+                'message' => 'Bu şehire ait haberler için yetkiniz yok',
+                'alert-type' => 'success'
+            );
+            return Redirect()->route('addpage.iha')->with($notification);
+        }
+        else if ($xmlDataString == "Hiç Haber Bulunmadı")
+        {
+            $notification = array(
+                'message' => 'Hiç Haber Bulunmadı',
+                'alert-type' => 'success'
+            );
+            return Redirect()->route('addpage.iha')->with($notification);
+        }
+
+       else if ($convertedistek == "İki rss isteği arasındaki süre en az 30")
+        {
+            $notification = array(
+                'message' => '30 Saniye sonra tekrar deneyiniz',
+                'alert-type' => 'info'
+            );
+            return Redirect()->route('addpage.iha')->with($notification);
+        }
 
 
-        if ($olustur != 162) {
+        else if ($olustur != 162) {
 
 
             $xmlDataString = file_get_contents(public_path('dene.xml'));
@@ -205,7 +251,7 @@ class IhaController extends Controller
         } else {
             $notification = array(
                 'message' => 'Haber Bulunamadı',
-                'alert-type' => 'info'
+                'alert-type' => 'success'
             );
             return Redirect()->route('addpage.iha')->with($notification);
         }
@@ -241,21 +287,21 @@ class IhaController extends Controller
         }
 
 
-        $content = file_get_contents($request->image);
+        $content = $request->image == null ? "" :file_get_contents($request->image);
 
         file_put_contents(realpath($filenamejpegay) . '/' . $benzersiz . "-" . $isim . "." . 'jpg', $content);
         //image/postimg//2021a/09"
         $imagesArray[0] = $filenamejpeg . "/" . $benzersiz . "-" . $isim . '.jpg';
-        $image = imagecreatefromstring(file_get_contents($request->image));
+        $image =$request->image == null ? "" : imagecreatefromstring(file_get_contents($request->image));
 
         ob_start();
-        imagejpeg($image, NULL, 100);
+        $request->image == null ? "" :       imagejpeg($image, NULL, 100);
         $cont = ob_get_contents();
         ob_end_clean();
-        imagedestroy($image);
-        $content = imagecreatefromstring($cont);
+        $request->image == null ? "" :  imagedestroy($image);
+        $request->image == null ? "" :    $content = imagecreatefromstring($cont);
 
-        imagedestroy($content);
+        $request->image == null ? "" : imagedestroy($content);
 
         $data = array();
         $images = $request->image == null ? "" : $request->image;

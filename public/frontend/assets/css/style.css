@@ -10131,6 +10131,10 @@ a, :hover {
     }
 }
 
+.egazete_size{
+    height: 350px!important;
+    max-width: 200px!important;
+}
 .card-kisalt {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -10142,13 +10146,12 @@ a, :hover {
 }
 
 .card-kisalttek {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow:hidden;
     line-height: 26px;
     max-height: 58px;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical
 }
 
 .card-spor {
@@ -10576,7 +10579,7 @@ a, :hover {
 }
 
 .sag-pagination > .swiper-pagination-bullet {
-    width: 6.6668% !important;
+    width: 6.6668%!important;
     height: 25px !important;
     text-align: center;
     line-height: 25px;
