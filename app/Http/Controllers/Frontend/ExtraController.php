@@ -358,26 +358,7 @@ class ExtraController extends Controller
 
     public function Home()
     {
-        $news = Analytics::fetchMostVisitedPages(Period::days(1));
-        $endNewss = [];
-//        dd($news);
 
-        foreach ($news as $news) {
-            $r = $news['url'];
-            $r = explode('?', $r);
-            $r = array_filter($r);
-            $r = array_merge($r, array());
-             $id = $r[0];
-            $id = str_replace('/haberi', '', $id);
-            $id = explode('-', $id);
-            $id = array_filter($id);
-            $id = array_merge($id, array());
-            $idCount = count($id) - 1;
-            $alinanID = $id[$idCount];
-            $alinanIDs = explode('/', $alinanID);
-            $endNewss[] = $alinanIDs[1];
-
-        }
 //        foreach ($news as $news) {
 //            $r = $news['url'];
 //            $r = explode('?', $r);
@@ -392,7 +373,7 @@ class ExtraController extends Controller
 //
 //        }
 //
-        $endNews = Post::whereIn('id', $endNewss)->limit(6)->get();
+        $endNews = Post::limit(6)->get();
 
 
 
