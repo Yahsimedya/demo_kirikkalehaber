@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+    <title>Admin Panel</title>
     <meta name="csrf-token" content="{{csrf_token()}}"><!-- Otmatik alt kategori seçmek için ekledik-->
     <!-- FONT AWESOME-->
     <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" as="style"
