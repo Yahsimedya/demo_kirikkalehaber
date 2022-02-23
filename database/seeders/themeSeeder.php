@@ -32,7 +32,7 @@ class themeSeeder extends Seeder
             'fotogaleri' => 1,
             'videogaleri' => 1,
             'gazetesayisi' => 0,
-            'multiple_category' => ["3","2","1"],
+            'multiple_category' => [3,2,1],
         ]);
     }
 }
