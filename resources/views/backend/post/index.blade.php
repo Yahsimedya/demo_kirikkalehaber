@@ -164,6 +164,7 @@
 
             </tbody>
         </table>
+            sssssssssss
         {{$post->links('pagination-links')}}
 
     </div>
