@@ -91,7 +91,7 @@ class AdminController extends Controller
 
 //        dd($newVisitor);
         $authors_postsCount=$authors_posts->count();
-        return view('admin.index',compact('newsCount','commentsCount','endNews','endComments','endAuthors_posts','authors_postsCount','analyticsData','analyticsDataMonth','topReferrers','userTypes','userTypesWeek'));
+        return view('admin.indexs',compact('newsCount','commentsCount','endNews','endComments','endAuthors_posts','authors_postsCount','analyticsData','analyticsDataMonth','topReferrers','userTypes','userTypesWeek'));
 
     }
 }
