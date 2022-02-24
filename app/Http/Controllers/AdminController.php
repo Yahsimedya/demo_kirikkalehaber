@@ -38,6 +38,8 @@ class AdminController extends Controller
 
 
     public function index(){
-     dd("hahahahahahahah");
+
+        return view('admin.index');
+
     }
 }
