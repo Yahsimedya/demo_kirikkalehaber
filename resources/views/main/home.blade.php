@@ -468,7 +468,7 @@
 
            @if($themeSetting[0]->gazetesayisi!=0)
             <div class="position-relative mt-3 ">
-                <b>YENİ SAYILARIMIZ</b>
+                <b>E-Gazete</b>
                 <p class="detay__sidebar-baslik "></p>
             </div>
             <div class="row">
