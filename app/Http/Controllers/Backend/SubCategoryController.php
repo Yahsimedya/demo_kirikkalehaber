@@ -56,7 +56,7 @@ class SubCategoryController extends Controller
             ]
         );
 
-        Subcategory::create($request->all());
+     //   Subcategory::create($request->all());
 
 
         $notification = array(
@@ -89,7 +89,7 @@ class SubCategoryController extends Controller
             ]
         );
 
-        Subcategory::find($id)->update($request->all());
+      //  Subcategory::find($id)->update($request->all());
 
 
         $notification = array(
@@ -103,9 +103,9 @@ class SubCategoryController extends Controller
     {
         $data = DB::table('subcategories')->where('id', $id)->first();
         // $update= Array();
-        $update['subcategory_status'] = $request->aktif;
+     //   $update['subcategory_status'] = $request->aktif;
 
-        DB::table('subcategories')->where('id', $id)->update($update);
+    //    DB::table('subcategories')->where('id', $id)->update($update);
 
 
         if ($request->aktif == 1) {

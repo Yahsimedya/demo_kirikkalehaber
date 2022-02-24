@@ -52,7 +52,7 @@ class SubDistrictController extends Controller
             ]
         );
 
-        Subdistrict::create($request->all());
+     //   Subdistrict::create($request->all());
         $notification = array(
             'message' => 'Kategori Başarıyla Eklendi',
             'alert-type' => 'success'
@@ -79,7 +79,7 @@ class SubDistrictController extends Controller
 
             ]
         );
-$subdistrict->update($request->all());
+//$subdistrict->update($request->all());
 
         $notification = array(
             'message' => 'Alt Kategori Başarıyla Eklendi',
@@ -91,9 +91,9 @@ $subdistrict->update($request->all());
     {
         // $data = DB::table('subdistricts')->where('id', $id)->first();
         // $update= Array();
-        $update['subdistrict_status'] = $request->aktif;
+       // $update['subdistrict_status'] = $request->aktif;
 
-         DB::table('subdistricts')->where('id',$id)->update($update);
+       //  DB::table('subdistricts')->where('id',$id)->update($update);
 
 
         if ($request->aktif==1) {
@@ -115,7 +115,7 @@ $subdistrict->update($request->all());
     public function DeleteSubDistrict(Subdistrict $subdistrict)
     {
 //        DB::table('subdistricts')->where('id',$id)->delete();
-        $subdistrict->delete();
+       // $subdistrict->delete();
         $notification = array(
             'message' => 'Alt Bölge Başarıyla Silindi',
             'alert-type' => 'error'

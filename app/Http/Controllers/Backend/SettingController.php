@@ -27,7 +27,7 @@ class SettingController extends Controller
         $data['linkedin'] = $request->linkedin;
 
 
-        DB::table('socials')->where('id',$id)->update($data);
+    //    DB::table('socials')->where('id',$id)->update($data);
         $notification = array(
             'message' => 'Sosyal Medya Linkleri Başarıyla Eklendi',
             'alert-type' => 'info'
@@ -56,8 +56,8 @@ class SettingController extends Controller
 //
 //        DB::table('seos')->where('id',$id)->update($data);
 //        dd($request->all());
-        $seos->fill($request->all()); // use fill function after validation!
-        $seos->save();
+     //   $seos->fill($request->all()); // use fill function after validation!
+    //    $seos->save();
 
         $notification = array(
             'message' => 'SEO Ayarları Başarıyla Kaydedildi',

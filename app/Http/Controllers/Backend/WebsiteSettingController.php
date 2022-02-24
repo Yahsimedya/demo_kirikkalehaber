@@ -26,93 +26,93 @@ class WebsiteSettingController extends Controller
     public function update(Request $request, WebsiteSetting $websetting)
     {
 
-        $data = $request->all();
-
-//        $websetting->update($request->all());
-        $old_image = $request->old_image;
-        $old_defaultImage = $request->old_defaultImage;
-        $old_favicon = $request->old_favicon;
-
-        $yil = Carbon::now()->year;
-        $ay = Carbon::now()->month;
-        if (file_exists('image/logo/' . $yil) == false) {
-            mkdir('image/logo/' . $yil, 0777, true);
-        }
-        if (file_exists('image/logo/' . $yil . '/' . $ay) == false) {
-            mkdir('image/logo/' . $yil . '/' . $ay, 0777, true);
-        }
-        $image = $request->logo;
-        $defaultImage = $request->defaultImage;
-        $favicon = $request->favicon;
-        if ($favicon) {
-            $image_one = uniqid() . '.' . $favicon->getClientOriginalName();
-            Image::make($favicon)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_one);
-            $data['favicon'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_one;
-            WebsiteSetting::find($websetting->id)->update($data);
-
-        } else {
-            $data['favicon'] = $old_favicon;
-            $websetting->update($request->all());
-        }
-        if ($image && $defaultImage) {
-            $image_one = uniqid() . '.' . $image->getClientOriginalName();
-
-            Image::make($image)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_one);
-            $data['logo'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_one;
-
-            $image_two = uniqid() . '.' . $defaultImage->getClientOriginalName();
-
-            Image::make($defaultImage)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_two);
-            $data['defaultImage'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_two;
-
-            WebsiteSetting::find($websetting->id)->update($data);
-            $notification = array(
-                'message' => 'Reklam Başarıyla Düzenlendi',
-                'alert-type' => 'success'
-            );
-            return redirect()->back();
-
-        } else if ($image) {
-
-            $image_one = uniqid() . '.' . $image->getClientOriginalName();
-
-            Image::make($image)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_one);
-            $data['logo'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_one;
-//            DB::table('posts')->insert($data);
-            WebsiteSetting::find($websetting->id)->update($data);
-            //   unlink($old_image);
-
-            $notification = array(
-                'message' => 'Reklam Başarıyla Düzenlendi',
-                'alert-type' => 'success'
-            );
-            return redirect()->back();
-        } elseif ($defaultImage) {
-            $image_two = uniqid() . '.' . $defaultImage->getClientOriginalName();
-
-            Image::make($defaultImage)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_two);
-            $data['defaultImage'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_two;
-
-            WebsiteSetting::find($websetting->id)->update($data);
-            $notification = array(
-                'message' => 'Reklam Başarıyla Düzenlendi',
-                'alert-type' => 'success'
-            );
-            return redirect()->back();
-        }
-        elseif ($favicon) {
-            $image_one = uniqid() . '.' . $favicon->getClientOriginalName();
-            Image::make($favicon)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_one);
-            $data['favicon'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_one;
-            WebsiteSetting::find($websetting->id)->update($data);
-            return redirect()->back();
-        } else {
-            $data['logo'] = $old_image;
-            $data['old_defaultImage'] = $old_defaultImage;
-            $data['favicon'] = $old_favicon;
-            $websetting->update($request->all());
-
-        }
+  //      $data = $request->all();
+  //
+////        $websetting->update($request->all());
+  //      $old_image = $request->old_image;
+  //      $old_defaultImage = $request->old_defaultImage;
+  //      $old_favicon = $request->old_favicon;
+  //
+  //      $yil = Carbon::now()->year;
+  //      $ay = Carbon::now()->month;
+  //      if (file_exists('image/logo/' . $yil) == false) {
+  //          mkdir('image/logo/' . $yil, 0777, true);
+  //      }
+  //      if (file_exists('image/logo/' . $yil . '/' . $ay) == false) {
+  //          mkdir('image/logo/' . $yil . '/' . $ay, 0777, true);
+  //      }
+  //      $image = $request->logo;
+  //      $defaultImage = $request->defaultImage;
+  //      $favicon = $request->favicon;
+  //      if ($favicon) {
+  //          $image_one = uniqid() . '.' . $favicon->getClientOriginalName();
+  //          Image::make($favicon)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_one);
+  //          $data['favicon'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_one;
+  //          WebsiteSetting::find($websetting->id)->update($data);
+  //
+  //      } else {
+  //          $data['favicon'] = $old_favicon;
+  //          $websetting->update($request->all());
+  //      }
+  //      if ($image && $defaultImage) {
+  //          $image_one = uniqid() . '.' . $image->getClientOriginalName();
+  //
+  //          Image::make($image)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_one);
+  //          $data['logo'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_one;
+  //
+  //          $image_two = uniqid() . '.' . $defaultImage->getClientOriginalName();
+  //
+  //          Image::make($defaultImage)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_two);
+  //          $data['defaultImage'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_two;
+  //
+  //          WebsiteSetting::find($websetting->id)->update($data);
+  //          $notification = array(
+  //              'message' => 'Reklam Başarıyla Düzenlendi',
+  //              'alert-type' => 'success'
+  //          );
+  //          return redirect()->back();
+  //
+  //      } else if ($image) {
+  //
+  //          $image_one = uniqid() . '.' . $image->getClientOriginalName();
+  //
+  //          Image::make($image)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_one);
+  //          $data['logo'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_one;
+////            DB::table('posts')->insert($data);
+  //          WebsiteSetting::find($websetting->id)->update($data);
+  //          //   unlink($old_image);
+  //
+  //          $notification = array(
+  //              'message' => 'Reklam Başarıyla Düzenlendi',
+  //              'alert-type' => 'success'
+  //          );
+  //          return redirect()->back();
+  //      } elseif ($defaultImage) {
+  //          $image_two = uniqid() . '.' . $defaultImage->getClientOriginalName();
+  //
+  //          Image::make($defaultImage)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_two);
+  //          $data['defaultImage'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_two;
+  //
+  //          WebsiteSetting::find($websetting->id)->update($data);
+  //          $notification = array(
+  //              'message' => 'Reklam Başarıyla Düzenlendi',
+  //              'alert-type' => 'success'
+  //          );
+  //          return redirect()->back();
+  //      }
+  //      elseif ($favicon) {
+  //          $image_one = uniqid() . '.' . $favicon->getClientOriginalName();
+  //          Image::make($favicon)->save('image/logo/' . $yil . '/' . $ay . '/' . $image_one);
+  //          $data['favicon'] = 'image/logo/' . $yil . '/' . $ay . '/' . $image_one;
+  //          WebsiteSetting::find($websetting->id)->update($data);
+  //          return redirect()->back();
+  //      } else {
+  //          $data['logo'] = $old_image;
+  //          $data['old_defaultImage'] = $old_defaultImage;
+  //          $data['favicon'] = $old_favicon;
+  //          $websetting->update($request->all());
+  //
+  //      }
 
         return Redirect()->route('website.setting');
 
