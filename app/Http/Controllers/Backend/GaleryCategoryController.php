@@ -38,7 +38,7 @@ class GaleryCategoryController extends Controller
             ]
         );
 
-        Photocategory::create($request->all());
+       // Photocategory::create($request->all());
 
 //        $data = array();
 //        $data['category_title'] = $request->category_title;
@@ -75,7 +75,7 @@ class GaleryCategoryController extends Controller
             ]
         );
 
-$photocategory->update($request->all());
+//$photocategory->update($request->all());
 
         $notification = array(
             'message' => 'Galeri Kategori Başarıyla Eklendi',
@@ -85,7 +85,7 @@ $photocategory->update($request->all());
     }
     public function DeleteCategory(Photocategory $photocategory)
     {
-$photocategory->delete();
+//$photocategory->delete();
         $notification = array(
             'message' => 'Galeri Kategori Başarıyla Silindi',
             'alert-type' => 'success'
@@ -96,11 +96,11 @@ $photocategory->delete();
     public function ActiveGalery(Request $request,$id)
     {
 
-        $data = DB::table('photocategories')->where('id', $id)->first();
+     //   $data = DB::table('photocategories')->where('id', $id)->first();
         // $update= Array();
-        $update['status'] = $request->aktif;
+       // $update['status'] = $request->aktif;
 
-         DB::table('photocategories')->where('id',$id)->update($update);
+      //   DB::table('photocategories')->where('id',$id)->update($update);
 
 
         if ($request->aktif==1) {

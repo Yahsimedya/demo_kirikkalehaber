@@ -31,38 +31,38 @@ class UserController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $users = array();
-        $yil = Carbon::now()->year;
-        $ay = Carbon::now()->month;
-        if (file_exists('image/Userimg/' . $yil) === false) {
-            mkdir('image/Userimg/' . $yil, 0777, true);
-        }
-        if (file_exists('image/Userimg/' . $yil . '/' . $ay) === false) {
-            mkdir('image/Userimg/' . $yil . '/' . $ay, 0777, true);
-        }
-
-        $image = $request->profile_photo_path;
-        if ($image) { // if image is updating
-            $image_one = uniqid() . '.' . $image->getClientOriginalName();
-
-            $new_image_name = 'image/Userimg/' . $yil . '/' . $ay . '/' . $image_one;
-            Image::make($image)->resize(800, 600)->fit(800, 600)->save($new_image_name);
-            $users['profile_photo_path'] = $new_image_name; // set new image to the object, replace tmp image with new right path
-
-            if (file_exists($request->old_image)) {
-                unlink($request->old_image);
-            }
-        }
-
-        $users['name'] = $request->name;
-        $users['id'] = $request->id;
-        $users['email'] = $request->email;
-        $userpass = User::find($id);
-
-        $users['password'] = $userpass->password == $request->password ? $request->password : \Hash::make($request->password);
-
-
-        User::where('id', '=', $id)->update($users);
+      //  $users = array();
+      //  $yil = Carbon::now()->year;
+      //  $ay = Carbon::now()->month;
+      //  if (file_exists('image/Userimg/' . $yil) === false) {
+      //      mkdir('image/Userimg/' . $yil, 0777, true);
+      //  }
+      //  if (file_exists('image/Userimg/' . $yil . '/' . $ay) === false) {
+      //      mkdir('image/Userimg/' . $yil . '/' . $ay, 0777, true);
+      //  }
+      //
+      //  $image = $request->profile_photo_path;
+      //  if ($image) { // if image is updating
+      //      $image_one = uniqid() . '.' . $image->getClientOriginalName();
+      //
+      //      $new_image_name = 'image/Userimg/' . $yil . '/' . $ay . '/' . $image_one;
+      //      Image::make($image)->resize(800, 600)->fit(800, 600)->save($new_image_name);
+      //      $users['profile_photo_path'] = $new_image_name; // set new image to the object, replace tmp image with new right path
+      //
+      //      if (file_exists($request->old_image)) {
+      //          unlink($request->old_image);
+      //      }
+      //  }
+      //
+      //  $users['name'] = $request->name;
+      //  $users['id'] = $request->id;
+      //  $users['email'] = $request->email;
+      //  $userpass = User::find($id);
+      //
+      //  $users['password'] = $userpass->password == $request->password ? $request->password : \Hash::make($request->password);
+      //
+      //
+      //  User::where('id', '=', $id)->update($users);
 
         return Redirect()->route('user.index')->with([
             'message' => 'Kullanıcı Başarıyla Güncellendi',

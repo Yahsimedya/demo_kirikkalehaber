@@ -43,7 +43,7 @@ $district = DB::table('districts')->latest('id')->get();
             ]
         );
 
-District::create($request->all());
+//District::create($request->all());
 
         $notification = array(
             'message' => 'Bölge Başarıyla Eklendi',
@@ -53,10 +53,10 @@ District::create($request->all());
     }
     public function ActiveDistrict(Request $request, $id)
     {
-        $data = DB::table('districts')->where('id', $id)->first();
-        $update['district_status'] = $request->aktif;
+     //  $data = DB::table('districts')->where('id', $id)->first();
+     //   $update['district_status'] = $request->aktif;
 
-        DB::table('districts')->where('id', $id)->update($update);
+      //  DB::table('districts')->where('id', $id)->update($update);
 
 
         if ($request->aktif == 1) {
@@ -102,7 +102,7 @@ District::create($request->all());
             ]
         );
 
-$district->update($request->all());
+//$district->update($request->all());
 
         $notification = array(
             'message' => 'Bölge Başarıyla Güncellendi',
@@ -112,7 +112,7 @@ $district->update($request->all());
     }
     public function DeleteDistrict(District $district)
     {
-        $district->delete();
+       // $district->delete();
         $notification = array(
             'message' => 'Bölge Başarıyla Silindi',
             'alert-type' => 'success'

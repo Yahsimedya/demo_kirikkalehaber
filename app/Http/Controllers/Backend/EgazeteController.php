@@ -38,28 +38,28 @@ class EgazeteController extends Controller
      */
     public function store(Request $request)
     {
-        $eGazete = Gazetesayis::create($request->all());
-        $yil = Carbon::now()->year;
-        $ay = Carbon::now()->month;
-        if (file_exists('storage/egazete/' . $yil) == false) {
-            mkdir('storage/egazete/' . $yil, 0777, true);
-        }
-        if (file_exists('storage/egazete/' . $yil . '/' . $ay) == false) {
-            mkdir('storage/egazete/' . $yil . '/' . $ay, 0777, true);
-        }
-
-        $image = $request->image;
-        if ($image) {
-            $image_one = uniqid() . '.' . Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $image->getClientOriginalExtension();
-
-            $new_image_name = 'storage/egazete/' . $yil . '/' . $ay . '/' . $image_one;
-
-            Image::make($image)->save($new_image_name, 68, 'jpg');
-
-            $eGazete->image = $new_image_name;
-        }
-
-        $eGazete->save();
+  //      $eGazete = Gazetesayis::create($request->all());
+  //      $yil = Carbon::now()->year;
+  //      $ay = Carbon::now()->month;
+  //      if (file_exists('storage/egazete/' . $yil) == false) {
+  //          mkdir('storage/egazete/' . $yil, 0777, true);
+  //      }
+  //      if (file_exists('storage/egazete/' . $yil . '/' . $ay) == false) {
+  //          mkdir('storage/egazete/' . $yil . '/' . $ay, 0777, true);
+  //      }
+  //
+  //      $image = $request->image;
+  //      if ($image) {
+  //          $image_one = uniqid() . '.' . Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $image->getClientOriginalExtension();
+  //
+  //          $new_image_name = 'storage/egazete/' . $yil . '/' . $ay . '/' . $image_one;
+  //
+  //          Image::make($image)->save($new_image_name, 68, 'jpg');
+  //
+  //          $eGazete->image = $new_image_name;
+  //      }
+  //
+  //      $eGazete->save();
 
 
         return Redirect()->route('egazete.index');
@@ -83,31 +83,31 @@ class EgazeteController extends Controller
      */
     public function edit(Request $request, Gazetesayis $post)
     {
-        //  $post=$request->except('_token');
-        $post->fill($request->all());
-        $yil = Carbon::now()->year;
-        $ay = Carbon::now()->month;
-        if (file_exists('storage/egazete/' . $yil) === false) {
-            mkdir('storage/egazete/' . $yil, 0777, true);
-        }
-        if (file_exists('storage/egazete/' . $yil . '/' . $ay) === false) {
-            mkdir('storage/egazete/' . $yil . '/' . $ay, 0777, true);
-        }
-
-        $image = $request->image;
-        if ($image) { // if image is updating
-            $image_one = uniqid() . '.' . $image->getClientOriginalName();
-
-            $new_image_name = 'storage/egazete/' . $yil . '/' . $ay . '/' . $image_one;
-            Image::make($image)->save($new_image_name, 68, 'jpg');
-            $post->image = $new_image_name; // set new image to the object, replace tmp image with new right path
-
-            if (file_exists($request->old_image)) {
-                unlink($request->old_image);
-            }
-        }
-        $post->save();
-
+    //    //  $post=$request->except('_token');
+    //    $post->fill($request->all());
+    //    $yil = Carbon::now()->year;
+    //    $ay = Carbon::now()->month;
+    //    if (file_exists('storage/egazete/' . $yil) === false) {
+    //        mkdir('storage/egazete/' . $yil, 0777, true);
+    //    }
+    //    if (file_exists('storage/egazete/' . $yil . '/' . $ay) === false) {
+    //        mkdir('storage/egazete/' . $yil . '/' . $ay, 0777, true);
+    //    }
+    //
+    //    $image = $request->image;
+    //    if ($image) { // if image is updating
+    //        $image_one = uniqid() . '.' . $image->getClientOriginalName();
+    //
+    //        $new_image_name = 'storage/egazete/' . $yil . '/' . $ay . '/' . $image_one;
+    //        Image::make($image)->save($new_image_name, 68, 'jpg');
+    //        $post->image = $new_image_name; // set new image to the object, replace tmp image with new right path
+    //
+    //        if (file_exists($request->old_image)) {
+    //            unlink($request->old_image);
+    //        }
+    //    }
+    //    $post->save();
+    //
         $notification = array(
             'message' => 'Kategori Başarıyla Güncellendi',
             'alert-type' => 'success'
@@ -118,10 +118,10 @@ class EgazeteController extends Controller
 
     public function status(Request $request, $id)
     {
-        $data = Gazetesayis::where('id', $id)->first();
-        $update['status'] = $request->aktif;
-
-        Gazetesayis::where('id', $id)->update($update);
+      //  $data = Gazetesayis::where('id', $id)->first();
+      //  $update['status'] = $request->aktif;
+      //
+      //  Gazetesayis::where('id', $id)->update($update);
         if ($request->aktif == 1) {
             $notification = array(
                 'message' => 'Sayfa Aktif Yapıldı',
@@ -156,7 +156,7 @@ class EgazeteController extends Controller
      */
     public function delete($id)
     {
-        Gazetesayis::where('id', $id)->delete();
+       // Gazetesayis::where('id', $id)->delete();
         $notification = array(
             'message' => 'Sayfa Başarıyla Silindi',
             'alert-type' => 'success'

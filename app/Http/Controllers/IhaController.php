@@ -52,7 +52,7 @@ class IhaController extends Controller
         $iha['iha_password'] = $request->iha_password;
         $iha['iha_rss'] = $request->iha_rss;
 
-        \DB::table('iha')->insert($iha);
+      //  \DB::table('iha')->insert($iha);
 
         $notification = array(
             'message' => 'Kullanıcı Başarıyla Eklendi',
@@ -72,7 +72,7 @@ class IhaController extends Controller
         $iha['iha_rss'] = $request->iha_rss;
         $iha['district'] = $request->district;
 
-        \DB::table('iha')->where('id', '=', $request->id)->update($iha);
+      //  \DB::table('iha')->where('id', '=', $request->id)->update($iha);
 
         $notification = array(
             'message' => 'Kullanıcı Başarıyla Güncellendi',
@@ -313,7 +313,7 @@ class IhaController extends Controller
         $data['image'] = $imagesArray[0];
         $data['user_id'] = $request->user_id;
         $data['created_at'] = Carbon::now();
-        DB::table('posts')->insert($data);
+      //  DB::table('posts')->insert($data);
 
 
         return Redirect()->route('addpage.iha');

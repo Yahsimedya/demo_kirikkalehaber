@@ -19,7 +19,7 @@ class ThemeController extends Controller
     public function update(Request $request, $id)
     {
 
-        Theme::find($id)->update($request->except('_token'));
+      //  Theme::find($id)->update($request->except('_token'));
         return redirect(route('theme.index'));
     }
 }

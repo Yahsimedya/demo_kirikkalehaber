@@ -45,7 +45,7 @@ class FixedPageController extends Controller
         $data['content'] = $request->content;
         $data['keyword'] = $request->keyword;
         $data['description'] = $request->description;
-        DB::table('fixedpage')->insert($data);
+      //  DB::table('fixedpage')->insert($data);
         $notification = array(
             'message' => 'Sayfa Başarıyla Eklendi',
             'alert-type' => 'success'

@@ -39,7 +39,7 @@ class CommentsController extends Controller
     public function DeleteComments(Request $request, $id)
     {
 //        dd($id);
-        Comments::find($id)->delete();
+  //      Comments::find($id)->delete();
         $notification = array(
             'message' => 'Yorum Silindi',
             'alert-type' => 'warning'
@@ -59,7 +59,7 @@ class CommentsController extends Controller
 
         if ($request->guvenlikkodu == $request->guvenlik) {
 
-            Comments::insert($request->except('_token', 'guvenlikkodu','yorumicerik','guvenlik',));
+          //  Comments::insert($request->except('_token', 'guvenlikkodu','yorumicerik','guvenlik',));
             $notification = array(
                 'message' => 'Haber Başarıyla Silindi',
                 'alert-type' => 'succes'
